@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/484.709c5f11.chunk.css","mappings":"AAAA,0BAEI,kBAAmB,CADnB,eAEJ","sources":["Components/MovieCast/MovieCast.module.css"],"sourcesContent":[".wrapper{\n    text-align: left;\n    margin-bottom: 10px;\n}"],"names":[],"sourceRoot":""}
