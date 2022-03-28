@@ -1,0 +1,16 @@
+.header{
+    font-weight: 500;
+    font-size: 20px;
+    text-align: left;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.item{
+    text-align: left;
+
+}
+
+.wrapper{
+    padding-left: 15px;
+}
