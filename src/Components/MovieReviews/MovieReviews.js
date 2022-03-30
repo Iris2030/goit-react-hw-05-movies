@@ -1,6 +1,7 @@
 import { useParams} from "react-router-dom"
 import { useState, useEffect } from "react";
 import nextId from "react-id-generator";
+import { fetchMovieReviews } from "../../ApiService.js/ApiService";
 // import s from './MovieReviews.module.css'
 
 
@@ -10,7 +11,7 @@ export default function MovieReviews(){
 
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=c46479025b6130edc933e316d219208d&language=en-US&page=1`).then(data => data.json())
+        fetchMovieReviews(movieId)
         .then(reviews =>{
             setReviews(reviews);
         }).catch(error => alert(error));
@@ -20,12 +21,11 @@ return(() => setReviews(''))
 
     return( 
         <>
-  {reviews && reviews.results.map(result => {
+  {reviews && reviews.results.length > 0 ? reviews.results.map(result => {
       return <div key={nextId()}> <h4>{result.author}</h4>
            <p>{result.content}</p>
            </div>
-            })}
-  {reviews.results !== [] && <p> We don't have any reviews for this movie </p> }  
+            }) : <p> We don't have any reviews for this movie </p>}
     </>
     )
 }

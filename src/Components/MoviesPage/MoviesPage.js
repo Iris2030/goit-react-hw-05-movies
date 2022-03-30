@@ -4,6 +4,9 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import Notiflix from 'notiflix';
+import { fetchMoviesSearch } from "../../ApiService.js/ApiService";
+
 
 
 export default function MoviesPage() {
@@ -11,6 +14,7 @@ export default function MoviesPage() {
   const [movies, setMovies] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+
 
 
   function handleInput(event) {
@@ -26,17 +30,16 @@ export default function MoviesPage() {
     return
     }
 
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=c46479025b6130edc933e316d219208d&query=${trimedValue}&language=en-US&page=1`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((movies) => {
-        setMovies(movies);
+    fetchMoviesSearch(trimedValue).then((movies) => {
+        setMovies(movies)
+        if(movies && movies.results.length === 0){
+            Notiflix.Notify.failure('No movies matches search query')
+        }
       }).catch(error => alert(error));
 
+
     navigate({ ...location, search: `query=${value}` }); 
+    
   }
 
 
@@ -48,12 +51,10 @@ export default function MoviesPage() {
         <button>Search</button>
       </form>
       <ul>
-        {movies &&  movies.results.map((movie) => {
-        //   return  console.log(movie);
+        {movies && movies.results.map((movie) => {
         return <Link key={movie.id} to={`/movies/${movie.id}`}> <li >{movie.title}</li></Link>
     })
          }
-         {/* {movies.results === [] && <p>No movies matches search query</p>} */}
       </ul>
     </div>
   );

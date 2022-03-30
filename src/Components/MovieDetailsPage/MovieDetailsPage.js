@@ -9,26 +9,25 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import nextId from "react-id-generator";
 import s from "./MovieDetailsPage.module.css";
+import { fetchMovieDetails } from "../../ApiService.js/ApiService";
 const MovieCast = lazy(() => import("../MovieCast/MovieCast"));
 const MovieReviews = lazy(() => import("../MovieReviews/MovieReviews"));
 
 export default function MovieDetailsPage() {
+
   let navigate = useNavigate();
   let { movieId } = useParams();
   const [movieById, setMovieById] = useState("");
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=c46479025b6130edc933e316d219208d&language=en-US`
-    )
-      .then((data) => data.json())
-      .then((movie) => {
+    fetchMovieDetails(movieId).then((movie) => {
         console.log(movie);
         setMovieById(movie);
       }).catch(error => alert(error));
   }, [movieId]);
 
   return (
+
     <>
       <button
         className={s.button}
@@ -59,10 +58,10 @@ export default function MovieDetailsPage() {
                     {genre.name}
                   </li>
                 ))}
+                {movieById.genres.length === 0 && <p>Unknown</p>}
               </ul>
             </div>
           </div>
-
           <div className={s.wrapperCast}>
             <div className={s.linkWrapper}>
               <h3>Additional information</h3>
