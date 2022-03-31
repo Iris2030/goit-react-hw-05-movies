@@ -33,7 +33,7 @@ export default function MovieDetailsPage() {
         className={s.button}
         type="button"
         onClick={() => {
-          navigate("/");
+          navigate(-1);
         }}
       >
         <AiOutlineArrowLeft />

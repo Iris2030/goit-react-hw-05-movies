@@ -9,6 +9,7 @@ import { fetchMoviesSearch } from "../../ApiService.js/ApiService";
 
 
 
+
 export default function MoviesPage() {
   const [value, setValue] = useState("");
   const [movies, setMovies] = useState("");
@@ -26,7 +27,7 @@ export default function MoviesPage() {
     setMovies('')
     const trimedValue = value.trim()
     if(!trimedValue){
-    alert('enter something')
+      Notiflix.Notify.failure('Enter something');
     return
     }
 
@@ -59,3 +60,6 @@ export default function MoviesPage() {
     </div>
   );
 }
+
+
+
