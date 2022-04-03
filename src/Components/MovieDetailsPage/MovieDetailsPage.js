@@ -1,5 +1,6 @@
 import {
   useNavigate,
+  useLocation,
   useParams,
   NavLink,
   Route,
@@ -13,15 +14,18 @@ import { fetchMovieDetails } from "../../ApiService.js/ApiService";
 const MovieCast = lazy(() => import("../MovieCast/MovieCast"));
 const MovieReviews = lazy(() => import("../MovieReviews/MovieReviews"));
 
-export default function MovieDetailsPage() {
 
+
+export default function MovieDetailsPage() {
+  const location = useLocation()
   let navigate = useNavigate();
   let { movieId } = useParams();
   const [movieById, setMovieById] = useState("");
+console.log(location);
+
 
   useEffect(() => {
     fetchMovieDetails(movieId).then((movie) => {
-        console.log(movie);
         setMovieById(movie);
       }).catch(error => alert(error));
   }, [movieId]);
