@@ -10,6 +10,19 @@ export default function MoviesPage() {
   const navigate = useNavigate();
 
 
+  useEffect(() => {
+    if (location.search) {
+      fetchMoviesSearch(location.search.split('=')[1])
+        .then((movies) => {
+          setMovies(movies);
+          if (movies && movies.results.length === 0) {
+            Notiflix.Notify.failure('No movies matches search query');
+          }
+        })
+        .catch((error) => alert(error));
+    }
+  }, [location.search]);
+
   function handleInput(event) {
     setValue(event.target.value);
   }
@@ -22,6 +35,8 @@ export default function MoviesPage() {
       Notiflix.Notify.failure("Enter something");
       return;
     }
+
+    
 
     fetchMoviesSearch(trimedValue)
       .then((movies) => {
@@ -48,13 +63,10 @@ export default function MoviesPage() {
               <Link
                 key={movie.id}
                 to={{
-                  pathname: `/movies/${movie.id}`,
-                  state: { from: location,
-                  query: value },
+                  pathname: `/movies/${movie.id}`
                 }}><li>{movie.title}</li></Link>
             );
           })}
-        {console.log(location)}
       </ul>
     </div>
   );
